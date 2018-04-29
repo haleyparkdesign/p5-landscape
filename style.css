@@ -1,0 +1,23 @@
+body {
+    margin: 0px;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+}
+
+canvas {
+    border: 0px solid #000;
+    position: relative;
+}
+
+span {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 60px;
+    margin: 0 auto;
+    z-index: 1;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    font-weight:1 00;
+}
