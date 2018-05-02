@@ -1,15 +1,35 @@
 var Y_AXIS = 1;
 var X_AXIS = 2;
 var b1, b2, c1, c2;
-var yHigh, yLow, offsetDiff, xoff, c;
+var yHigh, yLow, offsetDiff, c, xoff;
 
 var yoff = 0.0; // 2nd dimension of perlin noise
 
+class Star {
+    constructor(x, y) {
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight / 1.5;
+        this.radius = Math.random() * 2.5;
+    }
+}
+
+stars = [];
+
+//first star is planted at 40. Used to number the stars
+for (var i = 0; i < 40 * 12; i += 40) {
+    for (var j = 0; j < 40 * 12; j += 40) {
+        var t = new Star(i, j);
+        stars.push(t);
+    }
+}
+
+
 function setup() {
+    noStroke();
     createCanvas(windowWidth, windowHeight);
     c1 = color('rgb(103, 113, 252)');
     c2 = color('rgb(245, 190, 255)');
-    c3 = color('rgba(0, 61, 190, 0.45)');
+    ridgeFill = color('rgba(0, 61, 190, 0.45)');
 }
 
 function draw() {
@@ -19,16 +39,22 @@ function draw() {
     yHigh = 180;
     yLow = 250;
     offsetDiff = 0.05;
+    xoff = yoff * 0.1;
+
+    fill(255);
+    for (star of stars) {
+        ellipse(star.x + xoff, star.y, star.radius, star.radius);
+    }
+
     blendMode(MULTIPLY);
-    xoff = yoff * 0.2;
 
     while (yLow < height) {
-        fill(c3);
+        fill(ridgeFill);
         drawRidge(yHigh, yLow, xoff, offsetDiff);
         yHigh = yHigh * 1.21 + 10;
-        yLow = yLow * 1.24+ 10
+        yLow = yLow * 1.24 + 10
         xoff += 2;
-        offsetDiff += 0.01;
+        offsetDiff += 0.02;
     }
 }
 
@@ -44,12 +70,11 @@ function drawRidge(yHigh, yLow, xoff, offsetDiff) {
         xoff += offsetDiff;
     }
     // increment y dimension for noise
-    yoff += 0.001;
+    yoff += 0.002;
     vertex(width, height);
     vertex(0, height);
     endShape(CLOSE);
 }
-
 
 function setGradient(x, y, w, h, c1, c2, axis) {
     noFill();
@@ -68,4 +93,8 @@ function setGradient(x, y, w, h, c1, c2, axis) {
             line(i, y, i, y + h);
         }
     }
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }
