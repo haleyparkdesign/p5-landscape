@@ -5,22 +5,13 @@ var yHigh, yLow, offsetDiff, c;
 
 var xoff = 3;
 var yoff = 3;
+stars = [];
 
 class Star {
     constructor(x, y) {
         this.x = Math.random() * window.innerWidth;
-        this.y = Math.random() * window.innerHeight / 1.5;
+        this.y = Math.random() * (window.innerWidth - (-window.innerWidth)) + (-window.innerWidth);
         this.radius = Math.random() * 2.5;
-    }
-}
-
-stars = [];
-
-//first star is planted at 40. Used to number the stars
-for (var i = 0; i < 40 * 12; i += 40) {
-    for (var j = 0; j < 40 * 12; j += 40) {
-        var t = new Star(i, j);
-        stars.push(t);
     }
 }
 
@@ -30,6 +21,8 @@ function setup() {
     c2 = color('rgb(245, 190, 255)');
     ridgeFill = color('rgb(128, 160, 229)');
     noStroke();
+    frameRate(10);
+    addStars();
 }
 
 function draw() {
@@ -49,9 +42,11 @@ function draw() {
     blendMode(MULTIPLY);
     fill(ridgeFill);
 
+
     while (yLow < height) {
-        drawRidge(yHigh, yLow, xoff, offsetDiff);
-        yHigh = yHigh * 1.21 + 10;
+        noiseDetail(5, offsetDiff * 3.5);
+        drawRidge(yHigh, yLow, xoff, offsetDiff, randomSeed);
+        yHigh = yHigh * 1.2 + 10;
         yLow = yLow * 1.24 + 10
         offsetDiff += 0.02;
     }
@@ -66,7 +61,7 @@ function drawRidge(yHigh, yLow, xoff, offsetDiff) {
         // Set the vertex
         vertex(x, y);
         // Increment x dimension for noise
-        xoff += offsetDiff;
+        xoff -= offsetDiff;
     }
     // increment y dimension for noise
     vertex(width, height);
@@ -74,6 +69,7 @@ function drawRidge(yHigh, yLow, xoff, offsetDiff) {
     endShape(CLOSE);
 }
 
+// helper functions
 function setGradient(x, y, w, h, c1, c2, axis) {
     noFill();
     if (axis == Y_AXIS) { // Top to bottom gradient
@@ -106,4 +102,13 @@ function keyPressed() {
         yoff -= 1;
     }
     return false;
+}
+
+function addStars() {
+    for (var i = 0; i < 40 * 12; i += 15) {
+        for (var j = 40; j < 40 * 12; j += 15) {
+            var s = new Star(i, j);
+            stars.push(s);
+        }
+    }
 }
