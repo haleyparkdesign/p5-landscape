@@ -47,7 +47,7 @@ function draw() {
         noiseDetail(5, offsetDiff * 3.5);
         drawRidge(yHigh, yLow, xoff, offsetDiff, randomSeed);
         yHigh = yHigh * 1.2 + 10;
-        yLow = yLow * 1.24 + 10
+        yLow = yLow * 1.24 + 10;
         offsetDiff += 0.02;
     }
 }

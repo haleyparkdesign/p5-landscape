@@ -42,6 +42,8 @@ function draw() {
     xoff = yoff * 0.1;
 
     fill(255);
+
+    // draw stars
     for (star of stars) {
         ellipse(star.x + xoff, star.y, star.radius, star.radius);
     }
@@ -52,17 +54,20 @@ function draw() {
         fill(ridgeFill);
         drawRidge(yHigh, yLow, xoff, offsetDiff);
         yHigh = yHigh * 1.21 + 10;
-        yLow = yLow * 1.24 + 10
-        xoff += 2;
+        yLow = yLow * 1.24 + 10;
+        xoff -= 110;
         offsetDiff += 0.02;
+
     }
+
+    yoff += 0.035; // move the ridges
 }
 
 function drawRidge(yHigh, yLow, xoff, offsetDiff) {
     beginShape();
     noStroke();
     // Iterate over horizontal pixels
-    for (var x = 0; x <= width; x += 10) {
+    for (var x = 0; x <= width + 50; x += 10) {
         var y = map(noise(xoff), 0, 1, yHigh, yLow);
         // Set the vertex
         vertex(x, y);
@@ -70,7 +75,6 @@ function drawRidge(yHigh, yLow, xoff, offsetDiff) {
         xoff += offsetDiff;
     }
     // increment y dimension for noise
-    yoff += 0.002;
     vertex(width, height);
     vertex(0, height);
     endShape(CLOSE);
