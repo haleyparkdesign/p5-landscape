@@ -8,5 +8,3 @@ Auto-animated [(link)](http://hyojeongpark.github.io/p5-landscape/ver1)
 Interactable (with left/right arrow key input)
 [(link)](http://hyojeongpark.github.io/p5-landscape/ver2)
 
-
-![screenshot](screenshot.png)
